@@ -8,7 +8,8 @@
 </head>
 <body>
     <div id="app">
-        <example-component></example-component> <!-- Đây là nơi bạn gọi component -->
+        <!-- <example-component></example-component> Đây là nơi bạn gọi component -->
+        <vue-barcode> </vue-barcode>
     </div>
 
     <script src="{{ mix('js/app.js') }}"></script> <!-- Đảm bảo đường dẫn tới app.js -->

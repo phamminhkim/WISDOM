@@ -1,6 +1,7 @@
 <template>
     <div>
         <h3>📦 Scan sản phẩm</h3>
+        <button @click="startScanner">🔁 Quét lại</button>
         <div id="scanner-container" style="width: 100%; max-width: 400px; border: 2px solid #ccc;"></div>
         <p v-if="barcode">🔍 Đã quét: <strong>{{ barcode }}</strong></p>
         <p v-else>Không tìm thấy mã</p>
@@ -28,22 +29,32 @@ export default {
             console.log('[Quagga] Khởi tạo scanner...');
 
             Quagga.init({
+                locate: true,
+                numOfWorkers: 0, // chạy trên main thread cho debug
                 inputStream: {
                     name: "Live",
                     type: "LiveStream",
                     target: document.querySelector('#scanner-container'),
                     constraints: {
+                        width: 640,
+                        height: 480,
                         facingMode: "environment" // Dùng camera sau
                     }
                 },
+                locator: {
+                    patchSize: "medium", // thử small, medium, large
+                    halfSample: true
+                },
                 decoder: {
-                    readers: [
-                        "code_128_reader",
-                        "ean_reader",
-                        "ean_8_reader",
-                        "upc_reader",
-                        "upc_e_reader"
-                    ]
+                    // readers: [
+                    //     "code_128_reader",
+                    //     "ean_reader",
+                    //     "ean_8_reader",
+                    //     "upc_reader",
+                    //     "upc_e_reader"
+                    // ]
+                    readers: ["code_128_reader"]
+
                 },
                 locate: true
             }, (err) => {
